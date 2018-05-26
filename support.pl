@@ -94,7 +94,7 @@ iterator(Parent, [Head|Tail],Alpha, Beta, x, Depth,Heur, ActualV):-
 
 
 
-/*********NUOVO STATO*********/
+/*********NEW STATE*********/
 
 new_state(St,Pos,Turn,NewSt):-
 	
@@ -102,7 +102,7 @@ new_state(St,Pos,Turn,NewSt):-
 
 	append([played(Pos,Turn)],St1,NewSt).
 
-/************** EURISTICA *******************/
+/************** HEURISTIC *******************/
 
 recursive_heuristic(St,[Comb],H):-!,
 
@@ -141,7 +141,7 @@ heuristic(St,[E0,E1,E2],H):-
 
 
 
-/************* GESTIONE LISTE *****************/
+/************* LIST MANAGEMENT *****************/
 
 
 remove([], S0, S0):-!.
@@ -163,7 +163,7 @@ del(X,[Y|Tail],[Y|Tail1]):-
 
 	del(X,Tail,Tail1).
 
-/***** VALORE MINIMO E MASSIMO *****/
+/***** MIN AND MAX VALUE *****/
 mincc(EL,[_, +inf], EL):-!.
 mincc([_, +inf], EL, EL):-!.
 mincc([X,-inf], _, [X,-inf]):-!.

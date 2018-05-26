@@ -5,7 +5,7 @@ player(x).
 player(o).
 
 /*player interface*/
-vai :-
+go :-
 	retractall(won(_)),
 	starting_state(S0),
 	printScreen(S0),
@@ -23,8 +23,8 @@ starting_state([played(1,k), played(2,k), played(3,k),
 		played(7,k), played(8,k), played(9,k), playerTurn]).
 
 /*final state*/
-trovato(ST) :- player(X), winningCheck(ST, X), !,assert(won(X)).
-trovato(ST) :- already_played(ST,k,L),L=[],assert(won(no_one)).
+found(ST) :- player(X), winningCheck(ST, X), !,assert(won(X)).
+found(ST) :- already_played(ST,k,L),L=[],assert(won(no_one)).
 
 /*game moves*/
 play(ST, [playerTurn, played(Move,o)],[aiTurn, played(Move,k)]) :-
@@ -39,12 +39,12 @@ play(ST, [aiTurn, played(P,x)],[playerTurn, played(P,k)]) :-
 
 
 ask(X) :-
-	prompt1('scegliere la posizione in cui giocare: '),
+	prompt1('Choose the position to play in: '),
 	readln(Z),
 	nth0(0,Z,X,_R).
 
 step(S0):-
-	trovato(S0),!,
+	found(S0),!,
 	printScreen(S0).
 
 step(S0):-
@@ -55,7 +55,7 @@ step(S0):-
 	step(NewState).
 
 
-/* STAMPA SU SCHERMO */
+/* PRINTING */
 
 
 printScreen(X):-
@@ -80,8 +80,8 @@ printScreen(X):-
     write(' | '),
 	printPlayer(X,3),
 	writeln('               1 | 2 | 3'),
-	((won(no_one),!, writeln("Non ha vinto nessuno"));
-	(won(Player),!, format('ha vinto: ~w ~n',[Player]));true).
+	((won(no_one),!, writeln("No one has won!"));
+	(won(Player),!, format('Winner: ~w ~n',[Player]));true).
 
 printPlayer(St, Pos):-
 	member(played(Pos, Pl), St),
